@@ -14,11 +14,17 @@ export default class Start extends Phaser.Scene {
     this.add.image(600, 400, 'fondoStart').setDisplaySize(1200, 800)
 
     this.add
-      .image(600, 120, 'btnStartStart')
-      .setDisplaySize(120, 120)
+      .image(600, 150, 'btnStartStart')
+      .setDisplaySize(200, 200)
       .setInteractive()
       .on('pointerdown', (e) => {
         this.scene.start('Game')
+      })
+      .on('pointerover', () => {
+        document.body.style.cursor = 'pointer'
+      })
+      .on('pointerout', () => {
+        document.body.style.cursor = 'default'
       })
   }
 }

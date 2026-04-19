@@ -48,12 +48,6 @@ const Dashboard: FunctionComponent = (props: any) => {
 
   // Theme selection
 
-  React.useEffect(() => {
-    if (typeof langStrings !== 'undefined') {
-      setlang(langStrings[localStorage.getItem('aptugolang') || 'en'])
-    }
-  }, [])
-
   return (
     <React.Fragment>
       <div className={theme.pages}>

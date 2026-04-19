@@ -55,15 +55,15 @@ export default class Game extends Phaser.Scene {
 
     this.puntosB = 0
 
-    this.textoPuntosA = this.add.text(+`50`, +`15`, `Puntos Jugador A: ${this.puntosA}`, {
-      fontSize: '14px',
+    this.textoPuntosA = this.add.text(+`100`, +`15`, `Puntos Jugador A: ${this.puntosA}`, {
+      fontSize: '24px',
       fontFamily: 'Arial Black',
       color: '#fff',
       align: 'left',
     })
 
-    this.textoPuntosB = this.add.text(+`395`, +`15`, `Puntos Jugador B: ${this.puntosB}`, {
-      fontSize: '14px',
+    this.textoPuntosB = this.add.text(+`835`, +`15`, `Puntos Jugador B: ${this.puntosB}`, {
+      fontSize: '24px',
       fontFamily: 'Arial Black',
       color: '#fff',
       align: 'left',
@@ -141,6 +141,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.violetPaddle, this.wallBottom, null, null, this)
   }
   update() {
+    // Ganar o perder
     if (this.puntosB === 5 || this.puntosA === 5) {
       this.scene.pause()
 
@@ -152,30 +153,31 @@ export default class Game extends Phaser.Scene {
         this.scene.start('Start')
       }, 3000)
       if (this.puntosB === 5) {
-        this.add.text(+`44`, +`100`, `¡Ganó el Jugador B!`, {
-          fontSize: '48px',
+        this.add.text(+`280`, +`150`, `¡Ganó el Jugador B!`, {
+          fontSize: '64px',
           fontFamily: 'Arial Black',
           color: '#FF603D',
-          align: 'left',
+          align: 'center',
         })
       }
 
       if (this.puntosA === 5) {
-        this.add.text(+`44`, +`100`, `¡Ganó el Jugador A!`, {
-          fontSize: '48px',
+        this.add.text(+`280`, +`150`, `¡Ganó el Jugador A!`, {
+          fontSize: '64px',
           fontFamily: 'Arial Black',
           color: '#FF603D',
-          align: 'left',
+          align: 'center',
         })
       }
     }
 
+    // Anotar puntos
     if (this.ball.x < 0 || this.ball.x > 1200) {
       if (this.ball.x > 300) {
         this.textoPuntosA.setText(`Puntos Jugador A: ${(this.puntosA += 1)}`)
 
         setTimeout(() => {
-          this.ball.setVelocity(150, 0)
+          this.ball.setVelocity(300, 0)
         }, 500)
       }
 
@@ -183,7 +185,7 @@ export default class Game extends Phaser.Scene {
         this.textoPuntosB.setText(`Puntos Jugador B: ${(this.puntosB += 1)}`)
 
         setTimeout(() => {
-          this.ball.setVelocity(-150, 0)
+          this.ball.setVelocity(-300, 0)
         }, 500)
       }
 
@@ -196,32 +198,34 @@ export default class Game extends Phaser.Scene {
       this.ball.setVelocity(0, 0)
 
       setTimeout(() => {
-        this.ball.setPosition(301, 200)
+        this.ball.setPosition(601, 400)
       }, 1)
     }
 
+    // Movimiento de las paletas
     if (this.keys.down.isDown) {
-      this.bluePaddle.setVelocityY(100)
+      this.bluePaddle.setVelocityY(180)
     } else if (this.keys.up.isDown) {
-      this.bluePaddle.setVelocityY(-100)
+      this.bluePaddle.setVelocityY(-180)
     } else {
       this.bluePaddle.setVelocityY(0)
     }
 
     if (this.keys.S.isDown) {
-      this.violetPaddle.setVelocityY(100)
+      this.violetPaddle.setVelocityY(180)
     } else if (this.keys.W.isDown) {
-      this.violetPaddle.setVelocityY(-100)
+      this.violetPaddle.setVelocityY(-180)
     } else {
       this.violetPaddle.setVelocityY(0)
     }
 
+    // Control táctil
     if (this.input.activePointer.isDown) {
       if (this.input.x > this.physics.world.bounds.width / 2) {
         if (this.input.y > this.physics.world.bounds.height / 2) {
-          this.bluePaddle.setVelocityY(100)
+          this.bluePaddle.setVelocityY(180)
         } else if (this.input.y < this.physics.world.bounds.height / 2) {
-          this.bluePaddle.setVelocityY(-100)
+          this.bluePaddle.setVelocityY(-180)
         } else {
           this.bluePaddle.setVelocityY(0)
         }
@@ -229,20 +233,24 @@ export default class Game extends Phaser.Scene {
 
       if (this.input.x < this.physics.world.bounds.width / 2) {
         if (this.input.y > this.physics.world.bounds.height / 2) {
-          this.violetPaddle.setVelocityY(100)
+          this.violetPaddle.setVelocityY(180)
         } else if (this.input.y < this.physics.world.bounds.height / 2) {
-          this.violetPaddle.setVelocityY(-100)
+          this.violetPaddle.setVelocityY(-180)
         } else {
           this.violetPaddle.setVelocityY(0)
         }
       }
     }
   }
+
+  // Cambiar dirección de la pelota
   cambiarDireccion() {
     if (!this.beep.isPlaying) {
       this.beep.play()
     }
+    let velocidadX = this.ball.body.velocity.x
+    velocidadX *= 1.005
 
-    this.ball.setVelocityY(400 * (Math.random() - 0.5))
+    this.ball.setVelocity(velocidadX, 400 * (Math.random() - 0.5))
   }
 }
