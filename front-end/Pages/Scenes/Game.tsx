@@ -139,6 +139,34 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.bluePaddle, this.wallBottom, null, null, this)
     this.physics.add.collider(this.violetPaddle, this.wallTop, null, null, this)
     this.physics.add.collider(this.violetPaddle, this.wallBottom, null, null, this)
+
+    // Control táctil
+    this.input.on('pointerdown', (pointer: any) => {
+      if (pointer.x > this.physics.world.bounds.width / 2) {
+        if (pointer.y > this.physics.world.bounds.height / 2) {
+          this.bluePaddle.setVelocityY(180)
+        } else if (pointer.y < this.physics.world.bounds.height / 2) {
+          this.bluePaddle.setVelocityY(-180)
+        } else {
+          this.bluePaddle.setVelocityY(0)
+        }
+      }
+
+      if (pointer.x < this.physics.world.bounds.width / 2) {
+        if (pointer.y > this.physics.world.bounds.height / 2) {
+          this.violetPaddle.setVelocityY(180)
+        } else if (pointer.y < this.physics.world.bounds.height / 2) {
+          this.violetPaddle.setVelocityY(-180)
+        } else {
+          this.violetPaddle.setVelocityY(0)
+        }
+      }
+    })
+
+    this.input.on('pointerup', () => {
+      this.bluePaddle.setVelocityY(0)
+      this.violetPaddle.setVelocityY(0)
+    })
   }
   update() {
     // Ganar o perder
