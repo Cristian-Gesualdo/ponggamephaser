@@ -38,6 +38,22 @@ module.exports = merge(commonConfig, {
           to: 'img',
           noErrorOnMissing: true,
         },
+        {
+          from: "dist/*.mp3",
+          to: "[name][ext]",
+          noErrorOnMissing: true,
+        },
+        {
+          from: "dist/*.wav",
+          to: "[name][ext]",
+          noErrorOnMissing: true,
+        },
+        {
+          from: "dist/*.json",
+          to: "[name][ext]",
+          noErrorOnMissing: true,
+          filter: (resourcePath) => !resourcePath.endsWith("manifest.json"),
+        },
       ],
     }),
   ],
