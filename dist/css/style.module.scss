@@ -10,9 +10,17 @@ body {
     justify-content: center;
 
     .container {
-      .phaser {
+      > div {
         height: 100vh;
-        canvas {
+        
+        & div:last-child {
+          display: flex;
+          justify-content: center;
+          margin: 0;
+
+          canvas {
+            margin: 0 !important;
+          }
         }
       }
     }
